@@ -1,0 +1,23 @@
+{
+  "name": "whalar_test",
+  "version": "1.0.0",
+  "description": "\"# whalar_test\"",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesusbm90/whalar_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesusbm90/whalar_test/issues"
+  },
+  "homepage": "https://github.com/jesusbm90/whalar_test#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^3.8.3"
+  }
+}
