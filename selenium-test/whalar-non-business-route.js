@@ -47,9 +47,9 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
         // fills the form (username, password, check terms and clicks continue)
         await driver.sleep(1000)
         await driver.findElement(By.xpath('//*[@id="email-field"]')).sendKeys(username);
-        await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[1]/div[2]/div/div/div/input')).sendKeys(passwordWhalar);
+        await driver.findElement(By.name('password')).sendKeys(passwordWhalar);
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[1]/div[6]/div/div/label')).click();
-        await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[2]/div[2]/button/div[1]')).click();
+        await driver.findElement(By.css('button[data-test-id="btn-submit"]')).click();
 
         // asserts, with the title page, we continue in the sign up page
         await driver.sleep(500)

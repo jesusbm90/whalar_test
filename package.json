@@ -4,7 +4,13 @@
   "description": "\"# whalar_test\"",
   "main": "index.js",
   "scripts": {
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "whalar-accepted-terms": "node selenium/whalar-acceptedTerms-checks",
+    "whalar-business-route": "node selenium/whalar-business-route",
+    "whalar-email": "node selenium/whalar-email-checks",
+    "whalar-non-business-route": "node selenium/whalar-non-business-route",
+    "whalar-password": "node selenium/whalar-password-checks",
+    "whalar-referral": "node selenium/whalar-referral-checks"
   },
   "repository": {
     "type": "git",
