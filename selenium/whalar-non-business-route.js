@@ -40,51 +40,6 @@ const biography = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
         // authorises instagram to use this account
         await driver.sleep(2000)
         await driver.findElement(By.xpath('/html/body/div/section/div/form/ul/li[2]/button')).click();
-
-        // form to complete the process; fills the mandatory fields
-        await driver.sleep(2000);
-
-        // biography
-        await driver.findElement(By.xpath('//*[@id="profile-description"]')).sendKeys(biography);
-
-        // tag
-        await driver.findElement(By.xpath('button[data-tag="DIY"]')).click();
-
-        // fee
-        await driver.findElement(By.xpath('//*[@id="lowPrice"]')).sendKeys(1);
-
-        // first name, last name
-        await driver.findElement(By.xpath('//*[@id="profile-name"]')).sendKeys('firstName');
-        await driver.findElement(By.xpath('//*[@id="profile-lastname"]')).sendKeys('lastName');
-
-        // date of birth
-        await driver.findElement(By.xpath('//*[@id="profile-age-day"]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-age-day"]/option[2]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-age-month"]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-age-month"]/option[2]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-age-year"]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-age-year"]/option[15]')).click();
-
-        // gender
-        await driver.findElement(By.xpath('//*[@id="profile-gender"]')).click();
-        await driver.findElement(By.xpath('//*[@id="profile-gender"]/option[2]')).click();
-
-        // city
-        await driver.findElement(By.xpath('//*[@id="citycontainer"]/span/input')).sendKeys('city');
-        await driver.findElement(By.xpath('.tt-suggestion:nth-child(1)')).click();
-
-        // timezone
-        await driver.findElement(By.xpath('select[name="timeZone"]')).click();
-        await driver.findElement(By.xpath('//*[@id="profileform"]/ul[3]/li[3]/div[3]/div/div/select/option[2]')).click();
-
-        // phone number
-        await driver.findElement(By.xpath('//*[@id="web-phone"]')).sendKeys(123456789);
-
-        // notification email
-        await driver.findElement(By.xpath('//*[@id="profile-contact-email"]')).sendKeys(username);
-
-        // applies the form
-        await driver.findElement(By.xpath('//*[@id="profileSubmit"]')).click();
     } finally {
         driver.quit();
     }
