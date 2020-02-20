@@ -1,23 +1,48 @@
+const assert = require('assert');
 const { Builder, By, Key, until } = require('selenium-webdriver');
-const username = 'jesus.whalar.test+3@gmail.com';
-const password = 'whalar1234';
-const passwordWhalar = 'Whalar1234';
-const biography = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor';
 
 (async function non_business_route() {
+    // driver definition
     const driver = new Builder().forBrowser('chrome').build();
+
+    // constants and variable block definition
+    const password = 'whalar1234';
+    const passwordWhalar = 'Whalar1234';
+    const titleContentCreator = 'Content Creator Registration | Whalar';
+    const titleInstagramMainPage = 'Iniciar sesión • Instagram';
+    const titleMainPage = 'Influencer marketing done right. Creators with influence. | Whalar';
+    const titleSignUp = 'Sign Up';
+    const username = 'jesus.whalar.test+3@gmail.com';
 
     try {
         // accesses to the webpage and maximizes the window
         driver.get('http://whalar.com');
         driver.manage().window().maximize();
 
+        // asserts, with the title page, we are in the main page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleMainPage, "error assertion title: " + titleMainPage);
+        });
+
         // goes to the influencer application
         await driver.findElement(By.xpath('//*[@id="dropdownMenuLink"]')).click();
         await driver.findElement(By.xpath('//*[@id="navbar"]/ul[1]/li[1]/div/ul/li[2]/a')).click();
 
+        // asserts, with the title page, we are in the content creator registration
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleContentCreator, "error assertion title: " + titleContentCreator);
+        });
+
         // clicks on 'apply'
         await driver.findElement(By.xpath('//*[@id="navbar"]/ul[2]/li[1]/a')).click();
+
+        // asserts, with the title page, we are in the sign up page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleSignUp, "error assertion title: " + titleSignUp);
+        });
 
         // fills the form (username, password, check terms and clicks continue)
         await driver.sleep(1000)
@@ -26,10 +51,22 @@ const biography = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[1]/div[6]/div/div/label')).click();
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[2]/div[2]/button/div[1]')).click();
 
+        // asserts, with the title page, we continue in the sign up page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleSignUp, "error assertion title: " + titleSignUp);
+        });
+
         // selects the 'non-business' route; it is necessary waits since it cannot find the element
         await driver.sleep(2000)
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/div[2]/div[1]/div[2]')).click();
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/div[3]/a[2]/div[1]')).click()
+
+        // asserts, with the title page, we are in the instagram log in page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleInstagramMainPage, "error assertion title: " + titleInstagramMainPage);
+        });
 
         // logs in instagram application; it is necessary waits since it cannot find the elements
         await driver.sleep(2000)

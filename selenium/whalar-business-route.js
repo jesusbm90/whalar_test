@@ -1,12 +1,21 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
-const username = 'jesus.whalar.test6@gmail.com';
-const password = 'whalar1234';
-const passwordWhalar = 'Whalar1234';
-const biography = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const assert = require('assert');
+const { Builder, By, Key, until } = require('selenium-webdriver');
 
-(async function non_business_route() {
+(async function business_route() {
+    // driver definition
     const driver = new Builder().forBrowser('chrome').build();
+
+    // constants and variable block definition
+    const biography = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    const password = 'whalar1234';
+    const passwordWhalar = 'Whalar1234';
+    const titleContentCreator = 'Content Creator Registration | Whalar';
+    const titleFacebookContinueAs = 'Iniciar sesión con Facebook';
+    const titleFacebookMainPage = 'Facebook';
+    const titleMainPage = 'Influencer marketing done right. Creators with influence. | Whalar';
+    const titleSignUp = 'Sign Up';
+    const username = 'jesus.whalar.test+3@gmail.com';
+    const usernameFacebook = 'jesus.whalar.test@gmail.com';
 
     try {
         const originalWindow = await driver.getWindowHandle();
@@ -15,12 +24,30 @@ const assert = require('assert');
         driver.get('http://whalar.com');
         driver.manage().window().maximize();
 
+        // asserts, with the title page, we are in the main page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleMainPage, "error assertion title: " + titleMainPage);
+        });
+
         // goes to the influencer application
         await driver.findElement(By.xpath('//*[@id="dropdownMenuLink"]')).click();
         await driver.findElement(By.xpath('//*[@id="navbar"]/ul[1]/li[1]/div/ul/li[2]/a')).click();
 
+        // asserts, with the title page, we are in the content creator registration
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleContentCreator, "error assertion title: " + titleContentCreator);
+        });
+
         // clicks on 'apply'
         await driver.findElement(By.xpath('//*[@id="navbar"]/ul[2]/li[1]/a')).click();
+
+        // asserts, with the title page, we are in the sign up page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleSignUp, "error assertion title: " + titleSignUp);
+        });
 
         // fills the form (username, password, check terms and clicks continue)
         await driver.sleep(1000);
@@ -29,15 +56,23 @@ const assert = require('assert');
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[1]/div[6]/div/div/label')).click();
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/form/div[2]/div[2]/button/div[1]')).click();
 
+        // asserts, with the title page, we continue in the sign up page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleSignUp, "error assertion title: " + titleSignUp);
+        });
+
         // connect with facebook
         await driver.sleep(2000);
         await driver.findElement(By.xpath('/html/body/div[3]/div[2]/div[1]/div/div/div/div/div/div/div[3]/button')).click();
 
+        // facebook will be open in a separate window
         await driver.wait(
             async () => (await driver.getAllWindowHandles()).length === 2,
             10000
         );
 
+        // block to continue in the new opened window
         const windows = await driver.getAllWindowHandles();
         windows.forEach(async handle => {
             if (handle !== originalWindow) {
@@ -45,11 +80,23 @@ const assert = require('assert');
             }
         });
 
+        // asserts, with the title page, we are in the facebook log in page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleFacebookMainPage, "error assertion title: " + titleFacebookMainPage);
+        });
+
         // log in facebook
-        await driver.findElement(By.xpath('//*[@id="email"]')).sendKeys('jesus.whalar.test@gmail.com');
-        await driver.findElement(By.xpath('//*[@id="pass"]')).sendKeys('whalar1234');
+        await driver.findElement(By.xpath('//*[@id="email"]')).sendKeys(usernameFacebook);
+        await driver.findElement(By.xpath('//*[@id="pass"]')).sendKeys(password);
         await driver.findElement(By.xpath('//*[@id="u_0_0"]')).click();
         await driver.findElement(By.xpath('//*[@id="platformDialogForm"]/div/div/div/div/div/div[3]/div[1]/div[1]/div[2]')).click();
+
+        // asserts, with the title page, we are in the facebook continue as page
+        await driver.sleep(500)
+        driver.getTitle().then(function(title){
+            assert.strictEqual(title, titleFacebookContinueAs, "error assertion title: " + titleFacebookContinueAs);
+        });
 
         // form to complete the process; fills the mandatory fields
         await driver.sleep(2000);
